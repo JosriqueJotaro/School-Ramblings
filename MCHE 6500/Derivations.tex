@@ -1,0 +1,152 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[fleqn]{amsmath}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\usepackage[plain,english]{fancyref}
+
+% Make v cross
+\newcommand{\velocity}{\mathop{\ooalign{\hfil$v$\hfil\cr\kern0.08em--\hfil\cr}}\nolimits}
+
+\newcommand{\volsym}{\rlap{\kern.08em--}V}
+\newcommand{\volsubsym}{\rlap{\scriptsize\kern.08em--}V}
+
+\newcommand{\dd}{\mathrm{d}}
+
+%Format fref 
+\fancyrefaddcaptions{english}{%
+  \renewcommand*{\frefeqname}{Eq.}%
+}
+
+% Custom enumeration scheme
+\newcommand\setItemnumber[1]{\setcounter{enumi}{\numexpr#1-1\relax}}
+
+% Format margins
+\addtolength{\oddsidemargin}{-.875in}
+\addtolength{\evensidemargin}{-.875in}
+\addtolength{\textwidth}{1.75in}
+\addtolength{\topmargin}{-.875in}
+\addtolength{\textheight}{1.75in}
+
+\title{4500/6500 Lecture 8 and 9 Equations and Derivations}
+\author{Daniel Agramonte}
+\date{September 22 2020}
+
+\begin{document}
+
+\maketitle
+
+\section{Stagnation Functions}
+\subsection{Stagnation Enthalpy}
+\noindent For Stagnation Enthalpy we're given the following relation:
+\begin{flalign}
+    h_{0}&=h+\frac{\velocity^{2}}{2}.&& \label{eq:stag_enthalpy}
+\end{flalign}
+
+\subsection{Stagnation Temperature}
+\noindent Recall that
+\begin{flalign}
+    R &= C_{p}-C_{v}&& \nonumber
+\end{flalign}
+\noindent and
+\begin{flalign}
+    \gamma &= \frac{C_{p}}{C_{v}}&& \nonumber \\
+    \therefore C_{v} &= \frac{C_{p}}{\gamma}.&& \nonumber 
+\end{flalign}
+\noindent Substituting,
+\begin{flalign}
+    R &= C_{p}\left(1-\frac{1}{\gamma}\right)=C_{p}\left(\frac{\gamma-1}{\gamma}\right)&& \nonumber \\
+    \therefore C_{p} &= \frac{R\gamma}{\gamma-1}&& \nonumber
+\end{flalign}
+\noindent Noting that for small changes in temperature,
+\begin{flalign}
+    \Delta h &= C_{p}\Delta T.&& \nonumber
+\end{flalign}
+\noindent We note that
+\begin{flalign}
+    h_{0}-h &= C_{p}(T_{0}-T)=\frac{\velocity^{2}}{2}&& \nonumber \\
+    T_{0}-T&=\frac{\velocity^{2}}{2C_{p}}&& \nonumber \\
+    T_{0}&=T+\frac{\velocity^{2}}{2C_{p}}&& \nonumber \\
+    T_{0}&=T\left(1+\frac{\velocity^{2}}{2C_{p}T}\right).&& \nonumber
+\end{flalign}
+\noindent Substituting,
+\begin{flalign}
+    T_{0}&=T\left(1+\frac{\left(\gamma-1\right)\velocity^{2}}{2\gamma RT}\right).&& \nonumber  
+\end{flalign}
+\noindent Recalling that
+\begin{flalign}
+    M&\equiv \frac{\velocity}{a}=\frac{\velocity}{\sqrt{\gamma RT}},&& \nonumber
+\end{flalign}
+\noindent we can simplify our expression as follows
+\begin{flalign}
+    \frac{T_{0}}{T}&=\left(1+\frac{\left(\gamma-1\right)\velocity^{2}}{2\gamma RT}\right)=\left(1+\left(\frac{\gamma-1}{2}\right)\left(\frac{\velocity^{2}}{\gamma RT}\right)\right)=1+\frac{(\gamma-1)M^{2}}{2}&& \nonumber \\
+    \therefore \frac{T}{T_{0}} &= \frac{2}{2+(\gamma-1)M^{2}}.&& \label{eq:stag_temp}
+\end{flalign}
+\noindent Solving for $M$,
+\begin{flalign}
+    \frac{T_{0}}{T}&=1+\frac{(\gamma-1)M^{2}}{2}&& \nonumber \\
+    2\left(\frac{T_{0}}{T}-1\right)&=(\gamma-1)M^{2}&& \nonumber \\
+    M^{2}&=\frac{2\left(\textstyle{\frac{T_{0}}{T}}-1\right)}{\gamma-1}&& \nonumber \\
+    M&=\left(\frac{2\left(\textstyle{\frac{T_{0}}{T}}-1\right)}{\gamma-1}\right)^{0.5}.&& \label{inverse_stag_temp}
+\end{flalign}
+\subsection{Stagnation Pressure}
+\noindent Recall the following isentropic relationship,
+\begin{flalign}
+    \left(\frac{P_{2}}{P_{1}}\right)_{s}&=\left(\frac{T_{2}}{T_{1}}\right)^{\textstyle{\frac{\gamma}{\gamma-1}}}.&& \nonumber
+\end{flalign}
+\noindent Letting state 1 be any point along a stream line, and state 2 be the flow if it were to be isentropically brought to rest,
+\begin{flalign}
+    \frac{P_{0}}{P}&=\left(\frac{T_{0}}{T}\right)^{\textstyle{\frac{\gamma}{\gamma-1}}}.&& \nonumber
+\end{flalign}
+\noindent Substituting in our previous expression,
+\begin{flalign}
+    \frac{P_{0}}{P}&=\left(1+\frac{(\gamma-1)M^{2}}{2}\right)^{\textstyle{\frac{\gamma}{\gamma-1}}}&& \nonumber \\
+    \frac{P}{P_{0}}&=\left(1+\frac{(\gamma-1)M^{2}}{2}\right)^{\textstyle{\frac{\gamma}{1-\gamma}}}.&& \label{eq:stag_pressure}
+\end{flalign}
+\noindent Solving for $M$,
+\begin{flalign}
+    \left(\frac{P_{0}}{P}\right)^{\textstyle{\frac{\gamma-1}{\gamma}}}&=1+\frac{(\gamma-1)M^{2}}{2}&& \nonumber\\
+    2\left(\left(\frac{P_{0}}{P}\right)^{\textstyle{\frac{\gamma-1}{\gamma}}}-1\right)&=(\gamma-1)M^{2}&& \nonumber\\
+    M^{2}&=2\left(\displaystyle{\left(\frac{P_{0}}{P}\right)}^{\textstyle{\frac{\gamma-1}{\gamma}}}-1\right)(\gamma-1)^{-1}&& \nonumber\\
+    M&=\left(2\left(\displaystyle{\left(\frac{P_{0}}{P}\right)}^{\textstyle{\frac{\gamma-1}{\gamma}}}-1\right)(\gamma-1)^{-1}\right)^{0.5}.&& \label{eq:inverse_stag_pressure}
+\end{flalign}
+\newpage
+\subsection{Stagnation Density}
+
+\noindent This is the part I feel least comfortable with. The derivation I see most common online starts with the following equation (I'm not sure where it comes from):
+\begin{flalign}
+    \left(\frac{\rho_{2}}{\rho_{1}}\right)_{s}&=\left(\frac{T_{2}}{T_{1}}\right)^{\textstyle{\frac{1}{\gamma-1}}}.&& \nonumber
+\end{flalign}
+\noindent Letting state 1 be any point along a stream line, and state 2 be the flow if it were to be isentropically brought to rest,
+\begin{flalign}
+    \frac{\rho_{0}}{\rho}&=\left(\frac{T_{0}}{T}\right)^{\textstyle{\frac{1}{\gamma-1}}}.&& \nonumber
+\end{flalign}
+\noindent Substituting in our previous expression,
+\begin{flalign}
+    \frac{\rho_{0}}{\rho}&=\left(1+\frac{(\gamma-1)M^{2}}{2}\right)^{\textstyle{\frac{1}{\gamma-1}}}&& \nonumber \\
+    \frac{\rho}{\rho_{0}}&=\left(1+\frac{(\gamma-1)M^{2}}{2}\right)^{\textstyle{\frac{1}{1-\gamma}}}.&& \label{eq:stag_density}
+\end{flalign}
+\noindent Solving for $M$,
+\begin{flalign}
+    \left(\frac{\rho_{0}}{\rho}\right)^{\gamma-1}&=\left(1+\frac{(\gamma-1)M^{2}}{2}\right)&& \nonumber \\
+    2\left(\left(\frac{\rho_{0}}{\rho}\right)^{\gamma-1}-1\right)&=(\gamma-1)M^{2}&& \nonumber \\
+    M^{2}&=2\left(\left(\frac{\rho_{0}}{\rho}\right)^{\gamma-1}-1\right)(\gamma-1)^{-1}&& \nonumber \\
+    M&=\left(2\left(\left(\frac{\rho_{0}}{\rho}\right)^{\gamma-1}-1\right)(\gamma-1)^{-1}\right)^{0.5}.&& \label{eq:stag_density_inverse}
+\end{flalign}
+\section{Area Variation Effects in Isentropic Compressible Flow}
+\noindent Recall that for steady-state,
+\begin{flalign}
+    \dot{m}&=\rho\velocity A = \text{constant}&& \nonumber \\
+    \rho &= \frac{P}{RT}.&& \nonumber
+\end{flalign}
+\noindent The flow condition when $M=1$ is known as \textit{sonic flow}. In general,
+\begin{flalign}
+    M&=\frac{\velocity}{a}=\frac{\velocity}{\sqrt{\gamma RT}}&& \nonumber \\
+    \velocity&= M\sqrt{\gamma RT}.&& \nonumber
+\end{flalign}
+\noindent Substituting in \fref{eq:stag_temp} and \fref{eq:stag_pressure},
+\begin{flalign}
+    \dot{m}&=\frac{P}{RT}M\sqrt{\gamma RT} A = \text{constant}&& \nonumber \\
+    \dot{m}&=P_{0}\left(1+\frac{(\gamma-1)M^{2}}{2}\right)^{\textstyle{\frac{-\gamma}{\gamma-1}}}T_{0}^{-1}\left(1+\frac{(\gamma-1)M^{2}}{2}\right)R^{-1}M\sqrt{\gamma RT} A = \text{constant}&& \nonumber \\
+\end{flalign}
+\end{document}

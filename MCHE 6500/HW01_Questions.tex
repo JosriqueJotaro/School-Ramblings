@@ -1,0 +1,97 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[fleqn]{amsmath}
+\usepackage{amssymb}
+\usepackage{hyperref}
+
+% Make v cross
+\makeatletter
+\DeclareRobustCommand{\volume}{\text{\volumedash}V}
+\newcommand{\volumedash}{%
+  \makebox[0pt][l]{%
+    \ooalign{\hfil\hphantom{$\m@th V$}\hfil\cr\kern0.08em--\hfil\cr}%
+  }%
+}
+
+% Custom enumeration scheme
+\newcommand\setItemnumber[1]{\setcounter{enumi}{\numexpr#1-1\relax}}
+
+% Format margins
+\addtolength{\oddsidemargin}{-.875in}
+\addtolength{\evensidemargin}{-.875in}
+\addtolength{\textwidth}{1.75in}
+\addtolength{\topmargin}{-.875in}
+\addtolength{\textheight}{1.75in}
+
+\title{4500/6500 HW01 Questions}
+\author{Daniel Agramonte}
+\date{September 06 2020}
+
+\begin{document}
+
+\maketitle
+
+\section{Conceptual Questions}
+\begin{enumerate}
+    \setItemnumber{1}
+    \item If I'm being honest, I'm not exactly sure what is meant by this question.
+    \setItemnumber{5}
+    \item For this question this was my answer:
+    \begin{enumerate}
+        \item Mass flow
+        \item Heat
+        \item Work
+    \end{enumerate}
+    Is this correct?
+    \setItemnumber{11}
+    \item For this question, I'm pretty sure, I was making things too complicated. Here is my go:
+    
+    Let  $S_{i}$ $\forall$ $i$ $\in$ $\mathbb{N}$ be substates in quasi-equilibium 
+    \begin{flalign}
+        &\implies \frac{\delta Q_{1}}{T_{1}}=\frac{\delta Q_{2}}{T_{2}}=\hdots&& \\
+        &\implies \oint \frac{\delta Q}{T}=0.
+    \end{flalign}
+    I feel fairly confident in this result, but I don't know how to show that when the substates are in non-quasi-equilibrium that the cyclic integral will be greater than 0. \\ \\
+    After this, it should be relatively straightforward to show that the case when the entropy in the process equals 0, the work is minimized. \\ \\
+    Of course, I could be totally wrong about this - let me know if I'm missing something critical that makes this problem much easier.
+    \setItemnumber{17}
+    \item For this problem, I believe that I got all the correct assumptions:
+    \begin{enumerate}
+        \item Irrotational, i.e.
+        \begin{flalign}
+            \nabla \times \boldsymbol{v}&=0,
+        \end{flalign}
+        \item Incompressible, i.e.
+        \begin{flalign}
+            \nabla \cdot \boldsymbol{v}&=0,
+        \end{flalign}
+        \item Negligible friction forces, i.e.
+        \begin{flalign}
+            \text{Re} \gg 1,
+        \end{flalign}
+        \item and, steady-state, i.e.
+        \begin{flalign}
+            \frac{\partial \boldsymbol{v}}{\partial t}&=0.
+        \end{flalign}
+    \end{enumerate}
+    I don't understand the next part of the question, which asks for the two main main flow properties that the Bernoulli equation is used for. I'm not sure what this means, is it referring to the fact that fluid flow has to be laminar?
+\end{enumerate}
+\section{Calculation Based Questions}
+\begin{enumerate}
+    \setItemnumber{1}
+    \item For the NIST data, I got an extremely good number, but I noticed that the units seem to be off by exactly a factor of 1000. \\ \\
+    This is the source I found for Nitrogen: \url{https://webbook.nist.gov/cgi/cbook.cgi?ID=C7727379&Mask=1}
+    Do you know why this factor of 1000 is appearing?
+    \setItemnumber{2}
+    \item For this problem, please see attached work. I used ideal gas law to find mass flow rate (2.87 kg/s) and $\Delta T$ ended up being only 0.15 K, which seems remarkably low.
+    \setItemnumber{5}
+    \item I don't really know how to do this problem at all, to be honest. I made a equation for $C_{p}(T)$ for air and integrated it under a modified Tds relation and got a $\Delta \dot{S}$ that is incredibly incorrect. Again, please see attached work.
+    \setItemnumber{7}
+    \item So I got part a of this problem correct, and with a great deal of accuracy, but I had to solve the equation:
+    \begin{flalign}
+        \dot{q}+\dot{w}_{net}&=\Delta h + 0.5(\volume_{2}^{2}-\volume_{1}^{2}) \nonumber \\
+        -3200 &= \int_{350}^{T_{2}} C_{p}(T)\,dT+0.5(320^{2}-50^{2}).
+    \end{flalign}
+    Doing so wasn't a big deal, but it did require MATLAB. Are there approximations we will be expected to use on exams to make this process easier to do by hand?
+\end{enumerate}
+\end{document}

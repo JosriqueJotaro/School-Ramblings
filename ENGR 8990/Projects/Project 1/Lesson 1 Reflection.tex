@@ -1,0 +1,131 @@
+\documentclass{article}
+\pagenumbering{arabic}
+\usepackage{graphicx,amsmath,amssymb,bm,tikz}
+\usetikzlibrary{calc,patterns,decorations.pathmorphing,decorations.markings}
+\usepackage{xfrac}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+% Format fref 
+\usepackage[plain,english]{fancyref}
+\usepackage[margin=1in]{geometry} 
+\fancyrefaddcaptions{english}{\renewcommand*{\frefeqname}{Eq.}}
+% Figure Packages
+\usepackage[outercaption]{sidecap}
+\usepackage[export]{adjustbox}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{wrapfig}
+\usepackage{booktabs}
+\newcommand{\ra}[1]{\renewcommand{\arraystretch}{#1}}
+\usepackage{float}
+\usepackage{algorithm, algorithmic, amsfonts,amsmath,amssymb,amsthm, color,comment,enumitem, environ, fancyhdr,   graphicx, mathtools, wasysym}
+\pagestyle{fancy}
+\setlength{\headheight}{22.5pt}
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{sol}
+    {\emph{Solution:}
+    }
+    {
+    \qed
+    }
+\specialcomment{com}{ \color{blue} \textbf{Comment:} }{\color{black}} %for instructor comments while grading
+\NewEnviron{probscore}{\marginpar{ \color{blue} \tiny Problem Score: \BODY \color{black} }}
+\usepackage{etoolbox}
+% Page rotation
+\makeatletter
+\def\ifGm@preamble#1{\@firstofone}
+\appto\restoregeometry{%
+  \pdfpagewidth=\paperwidth
+  \pdfpageheight=\paperheight}
+\apptocmd\newgeometry{%
+  \pdfpagewidth=\paperwidth
+  \pdfpageheight=\paperheight}{}{}
+\makeatother
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Fill in the appropriate information below
+\lhead{Daniel Agramonte}  %replace with your name
+\rhead{ENGR 8990 \\ Project 1 - Lesson 1 Reflection} %replace XYZ with the homework course number, semester (e.g. ``Spring 2019"), and assignment number.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+% Table stuff
+\usepackage{multirow}
+%\usepackage{floatrow}
+%	\floatsetup[table]{capposition=top}%puts table caption above
+% Change \subsection title characteristics
+    \usepackage[parfill]{parskip}   % forces parskip to not affect headings
+    \usepackage{enumitem}           % used for editing itemize environment
+    \usepackage{titlesec}
+        \titleformat*{\section}{\Large\bfseries\titlerule\vspace{0.5em}}
+% Quote blocks
+    \usepackage{csquotes} % use environment 'displayquote'
+% Misc document settings
+%    \title{\Huge ENGR 8990 Project 1 - Lesson 1} \author{Daniel Agramonte} \date{12.05.20}
+    \setlength\parindent{10pt}
+    \setlength{\parskip}{1em}
+    \setlist{nosep, itemsep=0pt, parsep=0pt}
+% Misc vocab commands
+    \newcommand{\msalg}{{\fontfamily{cmtt}\selectfont ms83}}
+    \newcommand{\lsq}{\emph{lsqnonlin}}
+    \newcommand{\msalge}{{\fontfamily{cmtt}\selectfont MCHE\_6500\_NIST\_POLY}}
+%
+% MATLAB packages
+%
+\usepackage[framed,numbered]{matlab-prettifier}
+\usepackage{textcomp}
+\usepackage{listings}
+%
+% Matrix Spacing
+%
+\makeatletter
+\renewcommand*\env@matrix[1][\arraystretch]{%
+  \edef\arraystretch{#1}%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{*\c@MaxMatrixCols c}}
+\makeatother
+%
+\begin{document}
+%\maketitle
+
+\begin{enumerate}
+    \item \textit{What did you discover about the product, stakeholders, and/or markets?}
+    \\
+
+    Even though I consider myself fairly familiar with music and the music industry given that I was heavily involved in music for around 8-9 years, there is a lot I don't really understand about the market since I consistently had the perspective of an beginner or intermediate amateur. 
+    \\
+    \\
+    For the specific market we are considering, which is beginner keyboardists, we found that our most important market is either institutions and amateurs, with institutions likely being the more important one. 
+    \\
+    \\
+    The reason for this is that many schools around the US teach large introductory keyboard classes required for all music majors since keyboard is seen as an essential skill. Additionally, many pre-secondary schools, especially kindergarten, teach large keyboard classes as well, although the extent to which this is done is highly dependent on the affluence of the area. 
+    \\
+    \\
+    Since these large classes require all this equipment, we figure that purchases of these instruments will likely form the basis of a large university contract - something that will ensure a steady income flow into the company.
+    \\
+    \item \textit{What surprised you?}
+    \\
+    \\
+    Probably the most surprising thing we found was how many different markets interact with our product (novice keyboard) and how many different stakeholders we have. Given my experience, I always saw things from the perspective of an amateur student and never really thought about how contracts and deals between educational institutes and instrument OEM's work.
+    \\
+    \item \textit{Which stakeholders will you seek out to collect information from?}
+    \\
+    \\
+    Probably the most important people to hear from are the teachers and professors who teach the aforementioned introductory keyboard classes. Their opinion of the product will likely be what determines the financial success of the product. It would likely also be nice to hear from the students themselves, especially the younger ones. Many kids won't have the same familiarity with the product and therefore won't come in with preconceived notions of what it should or shouldn't do, although they may have a general familiarity with technology.
+    \\
+    \\
+    In addition to this, it would be very good to hear from novice amateurs. These individuals will form our second most important market and will have different needs than introductory keyboard professors and even their students.
+    \\
+    \\
+    The final stakeholders we will mention are professional musicians. Many musicians have basic keyboards lying around for a variety of purposes - often for noodling and composing new stuff or even for making basic samples. We suspect that the more successful ones won't be using a novice keyboard, but most artists don't have the luxury of spending thousands on a keyboard they use to sample a couple of melodies. If we could hear from these professionals, it would be good and we would likely be able to get at least one feature or two they request into the final product without altering the price much, if at all.
+\end{enumerate}
+
+\end{document}

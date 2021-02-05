@@ -1,0 +1,270 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[fleqn]{amsmath}
+\usepackage{amssymb}
+\usepackage{hyperref}
+%
+% MATLAB packages
+%
+\usepackage[framed,numbered]{matlab-prettifier}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{listings}
+
+% Make v cross
+\makeatletter
+\DeclareRobustCommand{\volume}{\text{\volumedash}V}
+\newcommand{\volumedash}{%
+  \makebox[0pt][l]{%
+    \ooalign{\hfil\hphantom{$\m@th V$}\hfil\cr\kern0.08em--\hfil\cr}%
+  }%
+}
+
+% Custom enumeration scheme
+\newcommand\setItemnumber[1]{\setcounter{enumi}{\numexpr#1-1\relax}}
+
+% Format margins
+\addtolength{\oddsidemargin}{-.875in}
+\addtolength{\evensidemargin}{-.875in}
+\addtolength{\textwidth}{1.75in}
+\addtolength{\topmargin}{-.875in}
+\addtolength{\textheight}{1.75in}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\setlength{\headheight}{23.1002pt}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Fill in the appropriate information below
+\lhead{Daniel Agramonte}  %replace with your name
+\rhead{MCHE 4500/6500 \\ Exam 2 - MATLAB Code} %replace XYZ with the homework course number, semester (e.g. ``Spring 2019"), and assignment number.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{4500/6500 Exam 2 MATLAB Code}
+\author{Daniel Agramonte}
+\date{11.01.2020}
+
+\begin{document}
+
+\maketitle
+
+\section*{MCHE\_6500\_P0101\_NIST\_POLY.m}
+\begin{lstlisting}[style=Matlab-editor]
+function out = MCHE_6500_P0101_NIST_POLY(El,T_1,T_2,b)
+
+% Convert to units that NIST uses
+T_1 = T_1/1000;
+T_2 = T_2/1000;
+
+% Coefficients from NIST
+
+% Argon
+C1 = [20.786,2.825911*(10^-7),-1.464191*(10^-7),1.092131*(10^-8),...
+-3.661371*(10^-8)];
+M1 = 39.948*(10^-3);
+
+% Oxygen
+M2 = 2*15.999*(10^-3);
+
+% Nitrogen
+M3 = 28.0134*(10^-3);
+
+% Helium
+C4 = [20.78603,4.850638*(10^-10),-1.582916*(10^-10),...
+    1.525102*(10^-11),3.196347*(10^-11)];
+M4 = 4.0022602*(10^-3);
+
+% C_p function
+C_p = @(t,C) C(1)+C(2)*t+C(3)*(t.^2)+C(4)*(t.^3)+(C(5)./(t.^2)); 
+
+% C_p function divided by t
+C_p_t = @(t,C) C(1)./t+C(2)+C(3)*t+C(4)*(t.^2)+(C(5)./(t.^3));
+
+if El == "Ar"
+    delta_h = (10^3)*(integral(@(t) C_p(t,C1),T_1,T_2))/M1;
+
+    delta_s_1 = (integral(@(t) C_p_t(t,C1),T_1,T_2))/M1;
+elseif El == "O"
+    delta_h = (10^3)*(integral(@(t) C_p(t,C2(t)),T_1,T_2))/M2;
+
+    delta_s_1 = (integral(@(t) C_p_t(t,C2(t)),T_1,T_2))/M2;
+elseif El == "N"
+    delta_h = (10^3)*(integral(@(t) C_p(t,C3(t)),T_1,T_2))/M3;
+
+    delta_s_1 = (integral(@(t) C_p_t(t,C3(t)),T_1,T_2))/M3;
+elseif El == "He"
+    delta_h = (10^3)*(integral(@(t) C_p(t,C4),T_1,T_2))/M4;
+
+    delta_s_1 = (integral(@(t) C_p_t(t,C4),T_1,T_2))/M4;
+elseif El == "Air"
+    delta_h = (10^3)*(0.01*((integral(@(t) C_p(t,C1),T_1,T_2))/M1)+...
+        0.21*((integral(@(t) C_p(t,C2),T_1,T_2))/M2)+...
+        0.78*((integral(@(t) C_p(t,C5),T_1,T_2))/M3));
+
+    delta_s_1 = 0.01*((integral(@(t) C_p_t(t,C1),T_1,T_2))/M1)+...
+        0.21*((integral(@(t) C_p_t(t,C2),T_1,T_2))/M2)+...
+        0.78*((integral(@(t) C_p_t(t,C5),T_1,T_2))/M3);
+end
+
+if b == 1
+    out = delta_s_1;
+elseif b == 0
+    out = delta_h;
+end
+
+function out = C2(t)
+
+if t<0.7
+    % 100K-700K
+    out = [31.32234,-20.23531,57.86644,-36.50624,-0.007374];
+    
+elseif t<2
+    % 700K-2000K
+    out = [30.03235,8.772972,-3.988133,0.788313,-0.741599];
+else
+    % 2000K-6000K
+    out =[20.91111,10.72071,-2.020498,0.146449,9.245722];
+end
+
+function out = C3(t)
+
+if t<0.5
+    % 100K-500K
+    out = [28.98641,1.853978,-9.647459,16.63537,0.000117];
+elseif t<2
+    % 500K-2000K
+    out = [19.50583,19.88705,-8.598535,1.369784,0.527601];
+else
+    % 2000K-6000K
+    out = [35.51872,1.128728,-0.196103,0.014662,-4.552760];
+end
+\end{lstlisting}
+
+\newpage
+\section*{MCHE\_6500\_Stag.m}
+\begin{lstlisting}[style=Matlab-editor]
+function out = MCHE_6500_Stag(x,gamma,f)
+
+% T/T_0 along an isentropic flow path 
+t_ratio = 1/(1+0.5*(gamma-1).*x.^2);
+
+% P/P_0 along an isentropic flow path
+p_ratio = (1+0.5*(gamma-1).*x.^2).^(gamma./(1-gamma));
+
+% rho/rho_0 along an isentropic flow path
+rho_ratio = (1+0.5*(gamma-1).*x.^2).^(1./(1-gamma));
+
+% M in terms of gamma and T/T_0 and is valid along an isentropic flow path
+M_t = (2*((gamma-1).^-1)*((x.^-1)-1)).^0.5;
+
+% M in terms of gamma and P/P_0 and is valid along an isentropic flow path
+M_p = (2*((gamma-1).^-1)*((x^((1-gamma)./gamma))-1))^0.5;
+
+% M in terms of gamma and rho/rho_0 and is valid along an isentropic 
+% flow path
+M_rho = (2*((gamma-1).^-1)*((x^(1-gamma))-1))^0.5;
+
+% Area ratio s.t. when the flow is choked, the mass flow rate is maximized
+A_ratio = (x.^-1).*(2*((gamma+1).^-1)*(1+0.5*(gamma-1).*x.^2)).^...
+    ((0.5*(gamma+1))./(gamma-1));
+
+if f == 1
+    out = t_ratio;
+elseif f == 2
+    out = p_ratio;
+elseif f == 3
+    out = rho_ratio;
+elseif f == 4
+    out = M_t;
+elseif f == 5
+    out = M_p;
+elseif f == 6
+    out = M_rho;
+elseif f == 7
+    out = A_ratio;
+end
+\end{lstlisting}
+
+\newpage
+\section*{MCHE\_6500\_Collars\_Method.m}
+\begin{lstlisting}[style=Matlab-editor]
+function [Bweak,Bstrong] = MCHE_6500_Collars_Method(M1,theta,gamma)
+% Calculate coefficients on poly
+A = M1.^2 - 1;
+B = 0.5*(gamma+1)*M1^4*tand(theta);
+C = (1 + 0.5*(gamma+1)*M1^2)*tand(theta);
+
+% Initial value iteration will start from
+X0 = A^0.5;
+Xn = X0;
+delt = 1;
+while delt > 0.000009
+    % Iterative process
+    Xnew = (A-B*(Xn+C)^(-1))^0.5;
+    delt = Xn-Xnew;
+    Xn = Xnew;
+end
+XI = Xn;
+XII = 0.5*(-(XI+C)+((XI+C)*(C-3*XI)+4*A)^.5);
+Bweak = acotd(XI);
+Bstrong = acotd(XII);
+\end{lstlisting}
+
+\section*{MCHE\_6500\_Normal\_Shock.m}
+\begin{lstlisting}[style=Matlab-editor]
+function out = MCHE_6500_Normal_Shock(M1,gamma,Options)
+
+Options = convertStringsToChars(Options);
+
+if isequal(Options,'M2')
+    out = ((M1^2+2*((gamma-1)^-1))/(2*gamma*((gamma-1)^-1)*M1^2-1))^0.5;
+elseif isequal(Options,'P2')
+    out = 2*gamma*((gamma+1)^-1)*M1^2-(gamma-1)/(gamma+1);
+elseif isequal(Options,'T2')
+    out = ((1+0.5*((gamma-1))*M1^2)*(gamma*M1^2-0.5*(gamma-1)))/...
+        ((0.5*(gamma+1)*M1)^2);
+elseif isequal(Options,'P02')
+    out = (((0.5*(gamma+1)*M1^2)*((1+0.5*(gamma-1)*M1^2)...
+        ^-1))^(gamma/(gamma-1)))/((2*gamma*((gamma+1)^-1)*M1^2-...
+        (gamma-1)*((gamma+1)^-1))^(1/(gamma-1)));
+elseif isequal(Options,'T02')
+    out = 1;
+    disp('You big dumb idiot! T_0,1=T_0,2 bc the process is adiabatic')
+else
+    disp('Not a valid Option!')
+    out = 69;
+end
+end
+\end{lstlisting}
+
+\newpage
+\section*{MCHE\_6500\_Oblique\_Shock.m}
+\begin{lstlisting}[style=Matlab-editor]
+function out = MCHE_6500_Oblique_Shock(M1,gamma,beta,Options)
+
+Options = convertStringsToChars(Options);
+
+if isequal(Options,'M2n')
+    out = (((M1*sind(beta))^2+2*((gamma-1)^-1))/(2*gamma*((gamma-1)^-1)*...
+        (M1*sind(beta))^2-1))^0.5;
+elseif isequal(Options,'P2')
+    out = 2*gamma*((gamma+1)^-1)*((M1*sind(beta)))^2-(gamma-1)/(gamma+1);
+elseif isequal(Options,'T2')
+    out = ((2*gamma*(((M1*sind(beta)))^2)-(gamma-1))*((gamma-1)*...
+        ((M1*sind(beta))^2)+2))/(((gamma+1)^2)*((M1*sind(beta))^2));
+elseif isequal(Options,'P02')
+    out = ((((gamma+1)*((M1*sind(beta))^2))/((gamma-1)*((M1*sind(beta))...
+        ^2)+2))^(gamma/(gamma-1)))*(((gamma+1)/(2*gamma*((M1*sind(beta))...
+        ^2)-(gamma-1)))^(1/(gamma-1)));
+elseif isequal(Options,'tantheta')
+    out = (2*cotd(beta)*((M1*sind(beta))^2-1))/((M1^2)*...
+    (gamma+cosd(2*beta))+2);
+elseif isequal(Options,'T02')
+    out = 1;
+    disp('You big dumb idiot! T_0,1=T_0,2 bc the process is adiabatic')
+else
+    disp('Not a valid Option!')
+    out = 69;
+end
+end
+\end{lstlisting}
+
+
+\end{document}

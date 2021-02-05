@@ -1,0 +1,52 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[fleqn]{amsmath}
+\usepackage{amssymb}
+\usepackage{hyperref}
+
+% Make v cross
+\makeatletter
+\DeclareRobustCommand{\volume}{\text{\volumedash}V}
+\newcommand{\volumedash}{%
+  \makebox[0pt][l]{%
+    \ooalign{\hfil\hphantom{$\m@th V$}\hfil\cr\kern0.08em--\hfil\cr}%
+  }%
+}
+
+% Custom enumeration scheme
+\newcommand\setItemnumber[1]{\setcounter{enumi}{\numexpr#1-1\relax}}
+
+% Format margins
+\addtolength{\oddsidemargin}{-.875in}
+\addtolength{\evensidemargin}{-.875in}
+\addtolength{\textwidth}{1.75in}
+\addtolength{\topmargin}{-.875in}
+\addtolength{\textheight}{1.75in}
+
+\title{ELEE 4210/6210 Assignment 6 Questions}
+\author{Daniel Agramonte}
+\date{September 17 2020}
+
+\begin{document}
+
+\maketitle
+\noindent Question:
+\\
+\\
+Given $h(t) = u(t)e^{-2t}$ and $x(t) = u(t)e^{-t}$, find $y(t)$.
+\\
+\\
+\noindent My attempt:
+\\
+\\
+\noindent We know by definition of the convolution,
+\begin{flalign}
+    y(t) &= x(t)*h(t) = \int_{-\infty}^{\infty} x(t-\tau)h(\tau)\,d\tau.&& \nonumber
+\end{flalign}
+\noindent Given that the system is causal,
+\begin{flalign}
+    y(t) &= u(t)\int_{0}^{t} u(t-\tau)e^{-t+\tau}u(\tau)e^{-\tau}\,d\tau&& \nonumber \\
+    y(t) &= u(t)\int_{0}^{t} u(t-\tau)e^{-t-\tau}u(\tau)\,d\tau.&& \nonumber
+\end{flalign}
+After this point, I get lost because I'm not sure how to handle the step function inside of the integral.
+\end{document}

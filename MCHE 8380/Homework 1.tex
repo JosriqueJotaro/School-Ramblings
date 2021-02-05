@@ -1,0 +1,119 @@
+\documentclass{article}
+\pagenumbering{arabic}
+\usepackage{graphicx,amsmath,amssymb,bm,tikz}
+\usetikzlibrary{calc,patterns,decorations.pathmorphing,decorations.markings}
+\usepackage{xfrac}
+\usepackage{accents}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+% Format fref 
+\usepackage[plain,english]{fancyref}
+\usepackage[margin=1in]{geometry} 
+\fancyrefaddcaptions{english}{\renewcommand*{\frefeqname}{Eq.}}
+% Figure Packages
+\usepackage[outercaption]{sidecap}
+\usepackage[export]{adjustbox}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{algorithm, algorithmic, amsfonts,amsmath,amssymb,amsthm, color,comment,enumitem, environ, fancyhdr,   graphicx, mathtools, wasysym}
+\pagestyle{fancy}
+\setlength{\headheight}{22.5pt}
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{sol}
+    {\emph{Solution:}
+    }
+    {
+    \qed
+    }
+\specialcomment{com}{ \color{blue} \textbf{Comment:} }{\color{black}} %for instructor comments while grading
+\NewEnviron{probscore}{\marginpar{ \color{blue} \tiny Problem Score: \BODY \color{black} }}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Fill in the appropriate information below
+\lhead{Daniel Agramonte}  %replace with your name
+\rhead{MCHE 8380 \\ Homework 1} %replace XYZ with the homework course number, semester (e.g. ``Spring 2019"), and assignment number.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+% Table stuff
+\usepackage{multirow}
+%\usepackage{floatrow}
+%	\floatsetup[table]{capposition=top}%puts table caption above
+% Change \subsection title characteristics
+    \usepackage[parfill]{parskip}   % forces parskip to not affect headings
+    \usepackage{enumitem}           % used for editing itemize environment
+    \usepackage{titlesec}
+        \titleformat*{\section}{\Large\bfseries\titlerule\vspace{0.5em}}
+% Quote blocks
+    \usepackage{csquotes} % use environment 'displayquote'
+% Misc document settings
+    \title{\Huge MCHE 8380 Homework 1} \author{Daniel Agramonte} \date{02.11.21}
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{1em}
+    \setlist{nosep, itemsep=0pt, parsep=0pt}
+% Misc vocab commands
+    \newcommand{\msalg}{{\fontfamily{cmtt}\selectfont ms83}}
+    \newcommand{\lsq}{\emph{lsqnonlin}}
+    \newcommand{\msalge}{{\fontfamily{cmtt}\selectfont MCHE\_6500\_NIST\_POLY}}
+%
+% MATLAB packages
+%
+\usepackage[framed,numbered]{matlab-prettifier}
+\usepackage{textcomp}
+\usepackage{listings}
+%
+% Matrix Spacing
+%
+\makeatletter
+\renewcommand*\env@matrix[1][\arraystretch]{%
+  \edef\arraystretch{#1}%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{*\c@MaxMatrixCols c}}
+\makeatother
+%
+\begin{document}
+\maketitle
+
+\begin{enumerate}
+    \item The vector $\boldsymbol{r} = x\boldsymbol{e}_{x}+y\boldsymbol{e}_{y}+z\boldsymbol{e}_{z}$ is referred to as the \textit{position vector} in Cartesian coordinates. Find $\nabla\cdot\boldsymbol{r}$ and $\nabla\times\boldsymbol{r}$.
+    \\
+    \\
+    \begin{sol}
+    We may treat $\nabla$ as the following vector:
+    \begin{flalign*}
+        \nabla &= \frac{\partial}{\partial x}\boldsymbol{e}_{x}+\frac{\partial}{\partial y}\boldsymbol{e}_{y}+\frac{\partial}{\partial z}\boldsymbol{e}_{z}.&&
+    \end{flalign*}
+    \end{sol}
+    \item Show that if $S_{ij}$ is symmetric and $A_{ij}$ is antisymmetric, then $S_{ij}A_{ij}$. Express this result in matrix notation.
+    \\
+    \\
+    \begin{sol}
+    Since $S_{ij}$ is symmetric and $A_{ij}$ is antisymmetric, $S_{ij}A_{ij}=c=-S_{ji}A_{ji}=-c^{T}$, but since $c$ is a scalar, $c=c^{T} \therefore -c^{T}=-c=c \therefore 2c=0 \therefore c=S_{ij}A_{ij}=0$, as required. 
+    \\
+    \\
+    We may express this result in matrix notation as follows: $\underaccent{\tilde}{\boldsymbol{S}}:\underaccent{\tilde}{\boldsymbol{A}}=0$
+    \\
+    \end{sol}
+    \item Substitute $u_{i}=B_{ij}v_{j}$ and $C_{ij}=p_{i}q_{j}$ into $w_{i}=C_{ij}u_{j}$, and transcribe the result into direction (vector-operator) notation.
+    \\
+    \\
+    \begin{sol}
+    \begin{flalign*}
+        w_{ij} &= p_{i}q_{j}B_{jk}v_{j}&& \\
+        \underaccent{\tilde}{\boldsymbol{W}} &= \boldsymbol{p}\boldsymbol{q}^{T}\underaccent{\tilde}{\boldsymbol{B}}^{T}\boldsymbol{v}
+    \end{flalign*}
+    \end{sol}
+    \item 
+\end{enumerate}
+
+\end{document}

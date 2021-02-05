@@ -1,0 +1,300 @@
+\documentclass{article}
+\pagenumbering{arabic}
+\usepackage{mathrsfs}
+\usepackage{graphicx,amsmath,amssymb,bm,tikz}
+\usetikzlibrary{calc,patterns,decorations.pathmorphing,decorations.markings}
+\usepackage{xfrac}
+\usepackage{bigints}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+% Format fref 
+\usepackage[plain,english]{fancyref}
+\usepackage[margin=1in]{geometry} 
+\fancyrefaddcaptions{english}{\renewcommand*{\frefeqname}{Eq.}}
+% Figure Packages
+\usepackage[outercaption]{sidecap}
+\usepackage[export]{adjustbox}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{algorithm, algorithmic, amsfonts,amsmath,amssymb,amsthm, color,comment,enumitem, environ, fancyhdr,   graphicx, mathtools, wasysym}
+\pagestyle{fancy}
+\setlength{\headheight}{22.5pt}
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{sol}
+    {\emph{Solution:}
+    }
+    {
+    \qed
+    }
+\specialcomment{com}{ \color{blue} \textbf{Comment:} }{\color{black}} %for instructor comments while grading
+\NewEnviron{probscore}{\marginpar{ \color{blue} \tiny Problem Score: \BODY \color{black} }}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Fill in the appropriate information below
+\lhead{Daniel Agramonte}  %replace with your name
+\rhead{MCHE 3450 \\ Lab 4 - Theoretical Background} %replace XYZ with the homework course number, semester (e.g. ``Spring 2019"), and assignment number.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+% Table stuff
+\usepackage{multirow}
+%\usepackage{floatrow}
+%	\floatsetup[table]{capposition=top}%puts table caption above
+% Change \subsection title characteristics
+    \usepackage[parfill]{parskip}   % forces parskip to not affect headings
+    \usepackage{enumitem}           % used for editing itemize environment
+    \usepackage{titlesec}
+        \titleformat*{\section}{\Large\bfseries\titlerule\vspace{0.5em}}
+% Quote blocks
+    \usepackage{csquotes} % use environment 'displayquote'
+% Misc document settings
+    \title{\Huge MCHE 3450 Lab 4 - Theoretical Background} \author{Daniel Agramonte} \date{11.07.20}
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{1em}
+    \setlist{nosep, itemsep=0pt, parsep=0pt}
+% Misc vocab commands
+    \newcommand{\msalg}{{\fontfamily{cmtt}\selectfont ms83}}
+    \newcommand{\lsq}{\emph{lsqnonlin}}
+    \newcommand{\msalge}{{\fontfamily{cmtt}\selectfont MCHE\_6500\_NIST\_POLY}}
+%
+% MATLAB packages
+%
+\usepackage[framed,numbered]{matlab-prettifier}
+\usepackage{textcomp}
+\usepackage{listings}
+%
+% Matrix Spacing
+%
+\makeatletter
+\renewcommand*\env@matrix[1][\arraystretch]{%
+  \edef\arraystretch{#1}%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{*\c@MaxMatrixCols c}}
+\makeatother
+%
+\begin{document}
+\maketitle
+\noindent We can express displacement in a beam and plate as follows,
+\begin{flalign}
+    w(x,t) &= \displaystyle\sum_{j=1}^{n}\psi_{j}(x)u_{j}(t).&& \label{eq:beamdisplacement}
+\end{flalign}
+\noindent For a beam of length $a$, we can express the kinetic energy in the system as follows,
+\begin{flalign}
+    T &= \frac{1}{2}\rho hb \int_{0}^{a} \dot{w}^{2} dx.&& \nonumber
+\end{flalign}
+\noindent Substituting \fref{eq:beamdisplacement},
+\begin{flalign}
+    T &= \frac{1}{2}\rho hb \bigintsss_{0}^{a}  \left(\displaystyle\sum_{j=1}^{N}\psi_{j}\dot{u}_{j}\right)^{2} dx.&& \nonumber
+\end{flalign}
+\noindent We can see that
+\begin{flalign}
+    \left(\displaystyle\sum_{j=1}^{N}\psi_{j}\dot{u}_{j}\right)^{2}&=
+    (\psi_{1}\dot{u}_{1}+\psi_{2}\dot{u}_{12}+\cdots+\psi_{N}\dot{u}_{N})(\psi_{1}\dot{u}_{1}+\psi_{2}\dot{u}_{2}+\cdots+\psi_{N}\dot{u}_{N})&& \nonumber \\
+    &=
+    \begin{matrix}[1.5]
+    (\psi_{1}\dot{u}_{1})(\psi_{1}\dot{u}_{1})&+& (\psi_{1}\dot{u}_{1})(\psi_{2}\dot{u}_{2})&+& \cdots &+&(\psi_{1}\dot{u}_{1})(\psi_{N}\dot{u}_{N})&+ \\
+    (\psi_{2}\dot{u}_{2})(\psi_{1}\dot{u}_{1})&+& (\psi_{2}\dot{u}_{2})(\psi_{2}\dot{u}_{2})&+& \cdots &+&(\psi_{2}\dot{u}_{2})(\psi_{N}\dot{u}_{N})&+& \\
+    \vdots & & \vdots & & \ddots & & \vdots \\
+    (\psi_{N}\dot{u}_{N})(\psi_{1}\dot{u}_{1})&+&  (\psi_{N}\dot{u}_{N})(\psi_{2}\dot{u}_{2})&+&  \cdots  &+&(\psi_{N}\dot{N}_{1})(\psi_{N}\dot{u}_{N})
+    \end{matrix}&& \nonumber \\
+    \nonumber \\
+    &=\left(\displaystyle\sum_{k=1}^{N}\psi_{k}\dot{u}_{k}(\psi_{1}\dot{u}_{1})\right)+\left(\displaystyle\sum_{k=1}^{N}\psi_{k}\dot{u}_{k}(\psi_{2}\dot{u}_{2})\right)+\cdots+\left(\displaystyle\sum_{k=1}^{N}\psi_{k}\dot{u}_{k}(\psi_{N}\dot{u}_{N})\right) && \nonumber \\
+    &= \displaystyle\sum_{j=1}^{N}\displaystyle\sum_{k=1}^{N}\psi_{j}\dot{u}_{j}\psi_{k}\dot{u}_{k}.&& \label{eq:squaresum}
+\end{flalign}
+\noindent By substituting \fref{eq:squaresum}, we can get
+\begin{flalign}
+    T &= \frac{1}{2}\rho hb \bigintsss_{0}^{a}  \displaystyle\sum_{j=1}^{N}\displaystyle\sum_{k=1}^{N}\psi_{j}\dot{u}_{j}\psi_{k}\dot{u}_{k}\text{ } dx.&& \nonumber
+\end{flalign}
+\noindent By Fubini's Theorem,
+\begin{flalign}
+    T &= \displaystyle\sum_{j=1}^{N}\displaystyle\sum_{k=1}^{N}\dot{u}_{j}\dot{u}_{k}\frac{1}{2}\rho hb \int_{0}^{a} \psi_{j}\psi_{k}\text{ } dx.&& \label{eq:Kineticbeam}
+\end{flalign}
+\noindent Defining,
+\begin{flalign}
+    (m_{jk})_{b} &\equiv \rho hb \int_{0}^{a} \psi_{j}\psi_{k}\text{ } dx.&& \label{eq:mjkb}
+\end{flalign}
+\noindent Substituting \fref{eq:mjkb} into \fref{eq:Kineticbeam},
+\begin{flalign}
+    T &= \displaystyle\sum_{j=1}^{N}\displaystyle\sum_{k=1}^{N}\frac{1}{2}\dot{u}_{j}\dot{u}_{k}(m_{jk})_{b}&& \label{eq:T_beam}   
+\end{flalign}
+\noindent For a beam we can express the potential energy as
+\begin{flalign}
+    V &= \int_{0}^{a}\frac{EI}{2}\left(\frac{\partial^{2} w(x,t)}{\partial x^{2}}\right)^{2} dx.&& \nonumber
+\end{flalign}
+\noindent Substituting in \fref{eq:beamdisplacement},
+\begin{flalign}
+    V&=\frac{EI}{2}\bigintsss_{0}^{a}\left(\frac{\partial^{2}}{\partial x^{2}}\displaystyle\sum_{j=1}^{n}\psi_{j}(x)u_{j}(t)\right)^{2}dx&& \nonumber \\
+    V&=\frac{EI}{2}\bigintsss_{0}^{a}\left(\displaystyle\sum_{j=1}^{n}\frac{\partial^{2}\psi_{j}}{\partial x^{2}}u_{j}\right)^{2}dx.&& \nonumber
+\end{flalign}
+\noindent By a similar formulation as \fref{eq:squaresum},
+\begin{flalign}
+    V&=\frac{EI}{2}\bigintsss_{0}^{a}\displaystyle\sum_{j=1}^{n}\displaystyle\sum_{k=1}^{n}\frac{\partial^{2}\psi_{j}}{\partial x^{2}}\frac{\partial^{2}\psi_{k}}{\partial x^{2}}u_{j}u_{k}\text{ }dx.&& \label{eq:potentialbeam}
+\end{flalign}
+\noindent By Fubini's Theorem,
+\begin{flalign}
+    V&=\displaystyle\sum_{j=1}^{n}\displaystyle\sum_{k=1}^{n}\frac{EI}{2}\int_{0}^{a}\frac{\partial^{2}\psi_{j}}{\partial x^{2}}\frac{\partial^{2}\psi_{k}}{\partial x^{2}}u_{j}u_{k}\text{ }dx&& \nonumber \\
+    V&=\displaystyle\sum_{j=1}^{n}\displaystyle\sum_{k=1}^{n}u_{j}u_{k}\frac{EI}{2}\int_{0}^{a}\frac{\partial^{2}\psi_{j}}{\partial x^{2}}\frac{\partial^{2}\psi_{k}}{\partial x^{2}}\text{ }dx.&& \nonumber
+\end{flalign}
+\noindent Defining,
+\begin{flalign}
+    (k_{jk})_{b} &\equiv EI\int_{0}^{a}\frac{\partial^{2}\psi_{j}}{\partial x^{2}}\frac{\partial^{2}\psi_{k}}{\partial x^{2}}\text{ }dx.&& \label{eq:kijb} 
+\end{flalign}
+\noindent Substituting \fref{eq:kijb} into \fref{eq:potentialbeam},
+\begin{flalign}
+    V&=\displaystyle\sum_{j=1}^{n}\displaystyle\sum_{k=1}^{n}\frac{1}{2}u_{j}u_{k}(k_{ij})_{b}.&& \label{eq:v_beam}
+\end{flalign}
+\noindent From this point we can apply Lagrange's equations in the following form to find an expression for the beam,
+\begin{flalign}
+    \frac{d}{dt}\left(\frac{\partial T}{\partial \dot{q}_{i}}\right)-\frac{\partial T}{\partial q_{i}}+\frac{\partial V}{\partial q_{i}}=0 \text{ } \forall \text{ }i\in \mathbb{N}&& \label{eq:lagrange}
+\end{flalign}
+\noindent Substituting \fref{eq:T_beam} and \fref{eq:v_beam} into \fref{eq:lagrange}, and choosing $q_{i}=u_{i}$ $\forall$ $i\in \mathbb{N}$,
+\begin{flalign}
+    0&=\frac{d}{dt}\left(\frac{\partial}{\partial \dot{u}_{i}}\left(\displaystyle\sum_{j=1}^{N}\displaystyle\sum_{k=1}^{N}\frac{1}{2}\dot{u}_{j}\dot{u}_{k}(m_{jk})_{b}\right)\right)-\frac{\partial}{\partial u_{i}}\left(\displaystyle\sum_{j=1}^{N}\displaystyle\sum_{k=1}^{N}\frac{1}{2}\dot{u}_{j}\dot{u}_{k}(m_{jk})_{b}\right)+\frac{\partial}{\partial u_{i}}\left(\displaystyle\sum_{j=1}^{n}\displaystyle\sum_{k=1}^{n}\frac{1}{2}u_{j}u_{k}(k_{jk})_{b}\right)&& \nonumber \\
+    0&=\frac{d}{dt}\left(\frac{\partial}{\partial \dot{u}_{i}}\left(\displaystyle\sum_{j=1}^{N}\displaystyle\sum_{k=1}^{N}\frac{1}{2}\dot{u}_{j}\dot{u}_{k}(m_{jk})_{b}\right)\right)+\frac{\partial}{\partial u_{i}}\left(\displaystyle\sum_{j=1}^{N}\displaystyle\sum_{k=1}^{N}\frac{1}{2}u_{j}u_{k}(k_{jk})_{b}\right).&& \label{eq:beamlagrangeraw}
+\end{flalign}
+\noindent Recalling \fref{eq:squaresum},
+\begin{flalign}
+    &\frac{\partial}{\partial \dot{u}_{1}}\left(\displaystyle\sum_{j=1}^{N}\displaystyle\sum_{k=1}^{N}\frac{1}{2}\dot{u}_{j}\dot{u}_{k}(m_{jk})_{b}\right) = \nonumber \\
+    &
+    \begin{matrix}[1.5]
+    \displaystyle\frac{\partial}{\partial \dot{u}_{1}}\left(\frac{1}{2}\dot{u}_{1}\dot{u}_{1}(m_{11})_{b}\right)&+& \displaystyle\frac{\partial}{\partial \dot{u}_{1}}\left(\frac{1}{2}\dot{u}_{1}\dot{u}_{2}(m_{12})_{b}\right)&+& \cdots &+&\displaystyle\frac{\partial}{\partial \dot{u}_{1}}\left(\frac{1}{2}\dot{u}_{1}\dot{u}_{N}(m_{1N})_{b}\right)&+& \\
+    \displaystyle\frac{\partial}{\partial \dot{u}_{1}}\left(\frac{1}{2}\dot{u}_{2}\dot{u}_{1}(m_{21})_{b}\right)&+& \displaystyle\frac{\partial}{\partial \dot{u}_{1}}\left(\frac{1}{2}\dot{u}_{2}\dot{u}_{2}(m_{22})_{b}\right)&+& \cdots &+&\displaystyle\frac{\partial}{\partial \dot{u}_{1}}\left(\frac{1}{2}\dot{u}_{2}\dot{u}_{N}(m_{2N})_{b}\right)&+& \\
+    \vdots & & \vdots & & \ddots & & \vdots\\
+    \displaystyle\frac{\partial}{\partial \dot{u}_{1}}\left(\frac{1}{2}\dot{u}_{N}\dot{u}_{1}(m_{N1})_{b}\right)&+&  \displaystyle\frac{\partial}{\partial \dot{u}_{1}}\left(\frac{1}{2}\dot{u}_{N}\dot{u}_{2}(m_{N2})_{b}\right)&+& \cdots &+&\displaystyle\frac{\partial}{\partial \dot{u}_{1}}\left(\frac{1}{2}\dot{u}_{N}\dot{u}_{N}(m_{NN})_{b}\right)
+    \end{matrix}&& \nonumber \\ \nonumber \\
+    &=
+    \begin{matrix}[1.5]
+    \dot{u}_{1}(m_{11})_{b}&+&\displaystyle\frac{1}{2}\dot{u}_{2}(m_{12})_{b}&+& \cdots &+&\displaystyle\frac{1}{2}\dot{u}_{N}(m_{1N})_{b}&+& \\
+    \displaystyle\frac{1}{2}\dot{u}_{2}(m_{21})_{b}&+&0&+& \cdots &+&0&+& \\
+    \vdots & & \vdots & & \ddots & & \vdots \\
+    \displaystyle\frac{1}{2}\dot{u}_{N}(m_{N1})_{b}&+&0&+& \cdots &+&0
+    \end{matrix}.&& \nonumber
+\end{flalign}
+\noindent Noting that $(m_{jk})_{b}=(m_{kj})_{b}$,
+\begin{flalign}
+    \frac{\partial}{\partial \dot{u}_{1}}\left(\displaystyle\sum_{j=1}^{N}\displaystyle\sum_{k=1}^{N}\frac{1}{2}\dot{u}_{j}\dot{u}_{k}(m_{jk})_{b}\right) &= 
+    \begin{matrix}[1.5]
+    \dot{u}_{1}(m_{11})_{b}&+& \displaystyle\frac{1}{2}\dot{u}_{2}(m_{12})_{b} &+& \cdots &+& \displaystyle\frac{1}{2}\dot{u}_{N}(m_{1N})_{b}&+ \\
+    \displaystyle\frac{1}{2}\dot{u}_{2}(m_{12})_{b} &+& 0 &+& \cdots &+& 0 &+ \\
+    \vdots & & \vdots & & \ddots & & \vdots \\
+    \displaystyle\frac{1}{2}\dot{u}_{N}(m_{1N})_{b}&+ & 0&+ & \cdots &+&0
+    \end{matrix}&& \nonumber \\
+    \frac{\partial}{\partial \dot{u}_{1}}\left(\displaystyle\sum_{j=1}^{N}\displaystyle\sum_{k=1}^{N}\displaystyle\frac{1}{2}\dot{u}_{j}\dot{u}_{k}(m_{jk})_{b}\right) &= \displaystyle\sum_{j=1}^{N} \dot{u}_{j}(m_{1j})_{b}.&& \nonumber
+\end{flalign}
+\noindent Generalizing by induction,
+\begin{flalign}
+    \frac{\partial}{\partial \dot{u}_{i}}\left(\displaystyle\sum_{j=1}^{N}\displaystyle\sum_{k=1}^{N}\frac{1}{2}\dot{u}_{j}\dot{u}_{k}(m_{jk})_{b}\right) &= \displaystyle\sum_{j=1}^{N} \dot{u}_{j}(m_{ij})_{b}.&& \label{eq:beamlagrangepart1}
+\end{flalign}
+\noindent Similarly,
+\begin{flalign}
+    \frac{\partial}{\partial u_{i}}\left(\displaystyle\sum_{j=1}^{N} \displaystyle\sum_{k=1}^{N}\frac{1}{2}u_{j}u_{k}(k_{jk})_{b}\right)&=\displaystyle\sum_{j=1}^{N}u_{j}(k_{ij})_{b}.&& \label{eq:beamlagrangepart2}
+\end{flalign}
+\noindent Substituting \fref{eq:beamlagrangepart1} and \fref{eq:beamlagrangepart2} into \fref{eq:beamlagrangeraw},
+\begin{flalign}
+    \frac{d}{dt}\left(\displaystyle\sum_{j=1}^{N} \dot{u}_{j}(m_{ij})_{b}\right)+\displaystyle\sum_{j=1}^{N}u_{j}(k_{ij})_{b}&=0&& \nonumber \\
+    \displaystyle\sum_{j=1}^{N} \ddot{u}_{j}(m_{ij})_{b}+\displaystyle\sum_{j=1}^{N}u_{j}(k_{ij})_{b}&=0&& \nonumber \\
+   [(m)_{b}]\ddot{u}+[(k)_{b}]u&=\boldsymbol{0}&& \label{eq:N-DOF-Ritz-Beam}
+\end{flalign}
+\noindent From here, we can solve this equation with the standard routine for an M degree of freedom system.
+\\
+\noindent We can now apply our admissible function to solve this problem:
+\begin{flalign}
+    \psi(x) &= -\cos{\frac{\gamma_{i}x}{a}}+\cosh{\frac{\gamma_{i}x}{a}}+\left(\frac{\sin{\gamma_{i}}-\sinh{\gamma_{i}}}{\cos{\gamma_{i}}-\cosh{\gamma_{i}}}\right)\left(\sin{\frac{\gamma_{i}x}{a}}-\sinh{\frac{\gamma_{i}x}{a}}\right)&&, \label{eq:Cantilever_Ritz} \\
+    &\cos{\gamma_{i}}\cosh{\gamma_{i}}+1=0 \text{   }\forall i\in \mathbb{N}&&, \label{eq:transcenEq}
+\end{flalign}
+\\ \\ \\ \\
+\noindent We can write the half-power estimation for $\zeta_{i}$ for the MDOF case as follows:
+\begin{flalign}
+    \zeta_{i} &= \frac{f_{i2}-f_{i1}}{f_{i,max}}.&& \nonumber
+\end{flalign}
+\noindent We determine the natural frequencies when $\Re\{H_{i}(\omega)\}$ changes sign.
+\\ 
+\\
+\noindent We can estimate the mode shape as follows:
+\begin{flalign}
+    \Im\{H_{i}(\omega)\} &= \frac{-u_{ij}u_{kj}}{2\zeta_{i}\omega_{n_{i}}^{2}}.
+\end{flalign}
+\noindent We can get the displacement FFT from the acceleration fft as follows
+\begin{flalign}
+    -\omega^{2}\mathscr{F}\{x(t)\}&=\mathscr{F}\left\{\frac{d^{2}x(t)}{dt^{2}}\right\}
+\end{flalign}
+
+\noindent We obtained the following natural frequencies theoretically
+\begin{flalign*}
+    \omega_{n_{i}}
+    &=
+    \begin{bmatrix}
+      51.1 \\
+      318.0 \\
+      890.5 \\
+      1744.9 \\
+      2884.5
+    \end{bmatrix}\text{Hz}
+\end{flalign*}
+\noindent Verifying these with our values from Blevins, we obtain the following errors:
+\begin{flalign*}
+    \varepsilon_{i}
+    &=
+    \begin{bmatrix}
+      -0.7806 \\
+      -0.0038 \\
+      -5.631\times10^{-6} \\
+      -9.729\times10^{-8} \\
+      -1.452\times10^{-8}
+    \end{bmatrix}\%
+\end{flalign*}
+We now apply the following formula to compare the natural frequencies:
+\begin{flalign*}
+    \varepsilon_{\Omega,i} &= \frac{\frac{\omega_{n_{i}}}{\omega_{n_{1}}}-\frac{\omega_{e,n_{i}}}{\omega_{e,n_{1}}}}{\frac{\omega_{e,n_{i}}}{\omega_{e,n_{1}}}}\times100\%.
+\end{flalign*}
+\\
+We now examine the error in the first natural frequency
+\begin{flalign*}
+    \varepsilon_{\omega,1} &= \frac{\omega_{n_{1}}-\omega_{e,n_{1}}}{\omega_{e,n_{1}}}\times100\%.
+\end{flalign*}
+
+We now apply the following formula to compare the mode shapes
+\begin{flalign}
+    \varepsilon_{U,i} &= \sqrt{\frac{\displaystyle{\sum_{j=1}^{n}(u_{i,j}-u_{e,i,j})^{2}}}{\displaystyle{\sum_{j=1}^{n}(u_{e,i,j})^{2}}}}\times100\%.
+\end{flalign}
+
+\begin{flalign*}
+    \varepsilon_{U,i}
+    &=
+    \begin{bmatrix}
+      3.48 \\
+      10.87 \\
+      40.62 \\
+      16.79 \\
+      144.88
+    \end{bmatrix}\%
+\end{flalign*}
+
+\begin{flalign*}
+    \varepsilon_{\Omega,i}
+    &=
+    \begin{bmatrix}
+      0 \\
+      11.74 \\
+      -7.30 \\
+      -4.06 \\
+      -5.07
+    \end{bmatrix}\%
+\end{flalign*}
+
+\begin{flalign*}
+    \varepsilon_{\omega,1}
+    &=11.18\%
+\end{flalign*}
+
+\end{document}
